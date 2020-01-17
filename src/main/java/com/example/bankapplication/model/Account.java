@@ -3,15 +3,18 @@ package com.example.bankapplication.model;
 import com.example.bankapplication.model.Credit.Credit;
 import com.example.bankapplication.model.User.User;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.util.Calendar;
+import java.util.*;
 
 @Entity
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 public class Account implements Serializable {
 
@@ -22,21 +25,45 @@ public class Account implements Serializable {
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
-    @OneToOne
-    @JoinColumn(name = "transaction_id")
-    private Transaction transaction;
-    @OneToOne
-    @JoinColumn(name = "credit_id")
-    private Credit credit;
+    @OneToMany(mappedBy = "account",
+    cascade = CascadeType.ALL)
+    private Set<Transaction> transactions = new HashSet<>();
+    @OneToMany(mappedBy = "account", fetch = FetchType.EAGER,
+            cascade = CascadeType.ALL)
+    private Set<Credit> credits = new HashSet<>();
     @Column(nullable = false)
     private String accountNumber;
     @Column(name = "creation_date")
-    private Calendar creationDate;
+    private Date creationDate;
     @Column(nullable = false)
     private BigDecimal balance;
 
-    public Account(String accountNumber, BigDecimal balance) {
+    public Account(String accountNumber, BigDecimal balance, Date creationDate) {
         this.accountNumber = accountNumber;
         this.balance = balance;
+        this.creationDate = creationDate;
+    }
+
+    public void addTransaction(Transaction transaction){
+        transaction.setAccount(this);
+        getTransactions().add(transaction);
+    }
+
+    public void addCredit(Credit credit){
+        credit.setAccount(this);
+        getCredits().add(credit);
+    }
+
+    @Override
+    public String toString() {
+        return "Account{" +
+                "id=" + id +
+                ", userId=" + user.getId() +
+                ", transactions=" + transactions +
+                //", credit=" + credit +
+                ", accountNumber='" + accountNumber + '\'' +
+                ", creationDate=" + creationDate +
+                ", balance=" + balance +
+                '}';
     }
 }

@@ -7,6 +7,7 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Calendar;
+import java.util.Date;
 
 @Entity
 @Data
@@ -17,16 +18,28 @@ public class Transaction implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_transaction")
     private Long id;
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "kind_operation_id")
     private KindOfOperation kindOfOperation;
-    @OneToOne(mappedBy = "transaction")
+    @ManyToOne
+    @JoinColumn(name = "account_id")
     private Account account;
     private BigDecimal amount;
-    private Calendar date;
+    private Date date;
 
-    public Transaction(BigDecimal amount, Calendar date) {
+    public Transaction(BigDecimal amount, Date date) {
         this.amount = amount;
         this.date = date;
+    }
+
+    @Override
+    public String toString() {
+        return "Transaction{" +
+                "id=" + id +
+                ", kindOfOperation" + kindOfOperation +
+                ", accountId=" + account.getId() +
+                ", amount=" + amount +
+                ", date=" + date +
+                '}';
     }
 }

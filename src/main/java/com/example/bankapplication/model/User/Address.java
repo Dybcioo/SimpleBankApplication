@@ -15,15 +15,28 @@ public class Address implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_address")
     private Long id;
-    @OneToOne(mappedBy = "address")
+    @OneToOne(mappedBy = "address", cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
     private User user;
     private String province;
     private String city;
+    private String street;
     private String numberHouse;
 
-    public Address(String province, String city, String numberHouse) {
+    public Address(String province, String city, String street, String numberHouse) {
         this.province = province;
         this.city = city;
+        this.street = street;
         this.numberHouse = numberHouse;
+    }
+
+    @Override
+    public String toString() {
+        return "Address{" +
+                "id=" + id +
+                ", province='" + province + '\'' +
+                ", city='" + city + '\'' +
+                ", street='" + street + '\'' +
+                ", numberHouse='" + numberHouse + '\'' +
+                '}';
     }
 }

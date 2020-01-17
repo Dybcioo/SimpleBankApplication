@@ -24,4 +24,12 @@ public class Appendage implements Serializable {
     public Appendage(String path) {
         this.path = path;
     }
+
+    @Override
+    public String toString() {
+        return "Appendage{" +
+                "id=" + id +
+                ", path='" + path + '\'' +
+                '}';
+    }
 }
