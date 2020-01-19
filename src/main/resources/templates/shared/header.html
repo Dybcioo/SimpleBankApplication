@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <div th:fragment="header-css">
+        <!-- this is header-css -->
+        <link rel="stylesheet" type="text/css"
+              href="webjars/bootstrap-material-design/4.1.2/dist/css/bootstrap-material-design.css" />
+        <link rel="stylesheet" type="text/css"
+              href="../../static/css/main.css" />
+    </div>
+</head>
+
+<body class="card-header">
+
+<nav id="header" th:fragment="header(pageName)" class="navbar navbar-expand bg-dark flex-column flex-md-row">
+    <div class="navbar-nav-scroll">
+        <ul class="nav nav-tabs bg-dark">
+
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/}" >Strona główna</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link"  th:href="@{/vehicleList.html(all)}">Lista pojazdów</a>
+            </li>
+            <li class="nav-item" sec:authorize="hasRole('ROLE_ADMIN')">
+                <a class="nav-link"   th:href="@{/vehicleForm.html}">Nowy pojazd</a>
+            </li>
+            <li class="nav-item" sec:authorize="isAnonymous()">
+                <a class="nav-link"   href="/registrationForm.html">Rejestracja</a>
+            </li>
+        </ul>
+    </div>
+
+    <ul class="nav-tabs navbar-nav ml-md-auto bg-dark">
+
+        <label style="color:yellow; margin-top: 20px;" sec:authorize="isAuthenticated()">
+            Witaj <span sec:authentication="name"/>!
+        </label>
+
+        <li class="nav-item" sec:authorize="isAuthenticated()">
+            <a class="nav-link" href="#" onclick="document.getElementById('logout').submit()">Wyloguj się</a>
+            <form th:action="@{/logout}" id="logout" method="post" style="display: none;">
+                <input
+                        type="hidden"
+                        th:name="${_csrf.parameterName}"
+                        th:value="${_csrf.token}"/>
+            </form>
+        </li>
+
+        <li sec:authorize="isAnonymous()"
+            class="nav-item"
+            th:class="'active'">
+            <a class="nav-link" th:classappend="'active'" th:href="@{/login}">Zaloguj się</a>
+        </li>
+    </ul>
+
+</nav>
+</body>
+</html>

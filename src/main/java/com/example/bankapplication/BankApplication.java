@@ -1,5 +1,6 @@
 package com.example.bankapplication;
 
+import com.example.bankapplication.config.RepositoriesInitializer;
 import com.example.bankapplication.model.Account;
 import com.example.bankapplication.model.Credit.Credit;
 import com.example.bankapplication.model.Credit.Status;
@@ -28,10 +29,10 @@ import java.util.Date;
 public class BankApplication {
 
     public static void main(String[] args) {
-        ConfigurableApplicationContext ctx =  SpringApplication.run(BankApplication.class, args);
-        Address address = new Address("Mazowieckie", "Warszawa", "Szkolna", "5");
+       /* ConfigurableApplicationContext ctx =*/  SpringApplication.run(BankApplication.class, args);
+        /*Address address = new Address("Mazowieckie", "Warszawa", "Szkolna", "5");
         Role role = new Role("user");
-        User user = new User("Wacek", "asdqwe", "Jan", "antoniak", new Date(1992,9,21), "male", "jacek@gmail.com");
+        User user = new User("Wacek", "asdqwe", "Jan", "antoniak", new Date(98,9,21), "male", "jacek@gmail.com");
         user.setAddress(address);
 
         RoleRepository roleRepo = ctx.getBean(RoleRepository.class);
@@ -42,18 +43,20 @@ public class BankApplication {
 
         UserRepository userRepository = ctx.getBean(UserRepository.class);
         userRepository.save(user);
-        Account account = new Account("12345678901234", new BigDecimal(3214.54), new Date(Calendar.DATE));
+        Account account = new Account("12345678901234", new BigDecimal(3214.54), new Date());
         AccountRepository accountRepository = ctx.getBean(AccountRepository.class);
+        account.setUser(user);
         accountRepository.save(account);
         user =  userRepository.findById(1L).get();
 
-        user.addAccount(account);
+        //user.addAccount(account);
         userRepository.save(user);
         System.out.println(user);
 
         KindOfOperation kindOfOperation = new KindOfOperation("przelew");
-        Transaction transaction = new Transaction(new BigDecimal(1200), new Date(Calendar.DATE));
-        kindOfOperation.addTransaction(transaction);
+        Transaction transaction = new Transaction(new BigDecimal(1200), new Date());
+        //kindOfOperation.addTransaction(transaction);
+        transaction.setKindOfOperation(kindOfOperation);
         account.addTransaction(transaction);
 
         System.out.println(user);
@@ -67,7 +70,7 @@ public class BankApplication {
         TargetRepository taRepo = ctx.getBean(TargetRepository.class);
         taRepo.save(target);
 
-        Credit credit = new Credit(new Date(Calendar.DATE), new BigDecimal(123), new BigDecimal(2222), new BigDecimal(2231));
+        Credit credit = new Credit(new Date(), new BigDecimal(123), new BigDecimal(2222), new BigDecimal(2231));
         credit.setStatus(status);
         credit.setTarget(target);
         credit.setAccount(account);
@@ -75,7 +78,10 @@ public class BankApplication {
         credRepo.save(credit);
 
         System.out.println(credit);
+        System.out.println(user.getAccounts());
+
         ctx.close();
+         */
     }
 
 }

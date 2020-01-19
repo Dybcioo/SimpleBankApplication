@@ -2,7 +2,9 @@ package com.example.bankapplication.model.Credit;
 
 
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -11,7 +13,8 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 public class Proposal implements Serializable {
 
@@ -20,7 +23,7 @@ public class Proposal implements Serializable {
     @Column(name = "id_proposal")
     private long id;
     @OneToMany(mappedBy = "proposal", fetch = FetchType.EAGER,
-    cascade = CascadeType.ALL, orphanRemoval = true)
+    cascade = CascadeType.ALL)
     private Set<Appendage> appendages = new HashSet<>();
     @OneToOne(mappedBy = "proposal", fetch = FetchType.EAGER,
     cascade = CascadeType.ALL, orphanRemoval = true)

@@ -1,11 +1,18 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-<h1 th:text="${message}"></h1>
 
+<html>
+<head>
+    <title>HOME</title>
+    <div th:replace="shared/header :: header-css"></div>
+</head>
+<body class="card">
+<div th:replace="shared/header :: header('home')"></div>
+<div id="main">
+    <p th:text="${name}">Hello</p>
+</div>
+<div th:replace="shared/footer :: footer"></div>
 </body>
+
 </html>
+

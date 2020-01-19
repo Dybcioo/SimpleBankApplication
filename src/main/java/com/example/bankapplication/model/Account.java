@@ -25,7 +25,7 @@ public class Account implements Serializable {
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
-    @OneToMany(mappedBy = "account",
+    @OneToMany(mappedBy = "account",fetch = FetchType.EAGER,
     cascade = CascadeType.ALL)
     private Set<Transaction> transactions = new HashSet<>();
     @OneToMany(mappedBy = "account", fetch = FetchType.EAGER,

@@ -1,12 +1,17 @@
 package com.example.bankapplication.model.User;
 
 import com.example.bankapplication.model.Account;
-import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.validator.constraints.UniqueElements;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
+import javax.validation.Valid;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.Past;
+import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.util.*;
 
@@ -20,7 +25,7 @@ public class User implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_user")
     private Long id;
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
+    @OneToOne
     @JoinColumn(name = "address_id")
     private Address address;
     @ManyToMany(fetch = FetchType.EAGER)
@@ -29,9 +34,10 @@ public class User implements Serializable {
     inverseJoinColumns = {@JoinColumn(name = "role_id", referencedColumnName = "id_role")})
     private Set<Role> roles = new HashSet<>();
     @OneToMany(mappedBy = "user", fetch = FetchType.EAGER,
-    cascade = CascadeType.ALL)
+    cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Account> accounts = new HashSet<>();
     @Column(nullable = false, unique = true)
+    @Size(min = 2, max = 20)
     private String login;
     @Column(nullable = false)
     private String password;
@@ -40,18 +46,19 @@ public class User implements Serializable {
     @Column(nullable = false)
     private String lastName;
     @Column(nullable = false, name = "birthday_date")
+    @Past
+    @Temporal(TemporalType.DATE)
     private Date birthdayDate;
-    @Column(nullable = false)
-    private String gender;
+    @Email
     private String email;
+    private Boolean active;
 
-    public User(String login, String password, String name, String lastName, Date birthdayDate, String gender, String email) {
+    public User(String login, String password, String name, String lastName, Date birthdayDate, String email) {
         this.login = login;
         this.name = name;
         this.password = password;
         this.lastName = lastName;
         this.birthdayDate = birthdayDate;
-        this.gender = gender;
         this.email = email;
     }
 
@@ -66,7 +73,6 @@ public class User implements Serializable {
                 ", name='" + name + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", birthdayDate=" + birthdayDate +
-                ", gender='" + gender + '\'' +
                 ", email='" + email + '\'' +
                 ", accounts='" + accounts + '\'' +
                 '}';
