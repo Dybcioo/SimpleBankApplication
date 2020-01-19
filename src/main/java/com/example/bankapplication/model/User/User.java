@@ -4,11 +4,8 @@ import com.example.bankapplication.model.Account;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.validator.constraints.UniqueElements;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
-import javax.validation.Valid;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.Past;
 import javax.validation.constraints.Size;
@@ -36,7 +33,7 @@ public class User implements Serializable {
     @OneToMany(mappedBy = "user", fetch = FetchType.EAGER,
     cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Account> accounts = new HashSet<>();
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false)
     @Size(min = 2, max = 20)
     private String login;
     @Column(nullable = false)

@@ -1,10 +1,10 @@
 package com.example.bankapplication.controller;
 
+import com.example.bankapplication.model.User.Address;
 import com.example.bankapplication.model.User.User;
 import com.example.bankapplication.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
-import org.springframework.beans.propertyeditors.CustomNumberEditor;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -12,13 +12,14 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.validation.Valid;
-import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Optional;
 
 @Controller
 public class LoginController {
@@ -79,6 +80,30 @@ public class LoginController {
         binder.registerCustomEditor(Float.class, "price", new CustomNumberEditor(Float.class, numberFormat, false));
 */
         binder.setDisallowedFields("creationdDate");
+    }
+
+    @RequestMapping(value="/profile", method= RequestMethod.GET)
+    public String showForm(Model model){
+
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        User user = userService.findUserByUserName(auth.getName());
+
+        if(user.getAddress() == null){
+            user.setAddress(new Address());
+        }
+
+        model.addAttribute("user", user);
+
+        return "profile";
+    }
+
+
+
+    @RequestMapping(value="/profile", method= RequestMethod.POST)
+    public String processForm(@Valid @ModelAttribute("user") User u){
+        userService.editUser(u);
+
+        return "redirect:profile";
     }
 
 
