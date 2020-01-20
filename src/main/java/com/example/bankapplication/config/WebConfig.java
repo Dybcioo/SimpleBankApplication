@@ -35,15 +35,15 @@ public class WebConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                .antMatchers("/statics/**", "/webjars/**", "/", "/registration", "/home", "/login")
+                .antMatchers("/statics/**", "/webjars/**", "/", "/registration", "/home", "/login", "/success")
                 .permitAll()
                 .antMatchers( "/vehicleForm.html").hasRole("ADMIN")
                 .anyRequest().authenticated();
-
+        http.csrf().ignoringAntMatchers("/statics/**", "/webjars/**", "/", "/registration", "/home", "/login", "/success");
         http
                 .formLogin()
                 .loginPage("/login").failureUrl("/login?error=true")
-                .defaultSuccessUrl("/success")
+                .defaultSuccessUrl("/success", true)
                 .usernameParameter("user_name")
                 .passwordParameter("password")
                 .permitAll();

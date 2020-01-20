@@ -2,7 +2,6 @@ package com.example.bankapplication.model;
 
 import com.example.bankapplication.model.Credit.Credit;
 import com.example.bankapplication.model.User.User;
-import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -26,14 +25,14 @@ public class Account implements Serializable {
     @JoinColumn(name = "user_id")
     private User user;
     @OneToMany(mappedBy = "account",fetch = FetchType.EAGER,
-    cascade = CascadeType.ALL)
+    cascade = CascadeType.ALL,  orphanRemoval = true)
     private Set<Transaction> transactions = new HashSet<>();
-    @OneToMany(mappedBy = "account", fetch = FetchType.EAGER,
-            cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "account", fetch = FetchType.EAGER)
     private Set<Credit> credits = new HashSet<>();
     @Column(nullable = false)
     private String accountNumber;
     @Column(name = "creation_date")
+    @Temporal(TemporalType.DATE)
     private Date creationDate;
     @Column(nullable = false)
     private BigDecimal balance;
@@ -65,5 +64,12 @@ public class Account implements Serializable {
                 ", creationDate=" + creationDate +
                 ", balance=" + balance +
                 '}';
+    }
+
+    @PreRemove
+    public void removeAll(){
+        user.getAccounts().remove(this);
+        transactions.forEach(transaction -> transaction.setAccount(null));
+        credits.forEach(credit -> credit.setAccount(null));
     }
 }

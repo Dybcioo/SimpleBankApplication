@@ -6,4 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface CreditRepository extends JpaRepository<Credit, Long> {
+    void deleteAllByAccount_Id(Long id);
 }

@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <div th:replace="shared/header :: header-css"></div>
+
+    <title>Historia Transakcji</title>
+</head>
+<body class="card">
+<div th:replace="shared/header :: header('home')"></div>
+
+<div th:with="boundMin=${20000},boundMax=${40000}">
+
+
+
+    <H1>Historia Transakcji</H1>
+
+    <form th:method="POST" th:action="@{transactionList.html}" th:object="${searchCommand}">
+        <div class="row">
+            <div class="form-group col-md-6">
+                <input th:field="*{numberAccount}" placeholder="Numer konta" class="form-control"
+                       th:classappend="${#fields.hasErrors('numberAccount')}?'is-invalid'"/>
+                <input type="hidden" th:field="*{id}">
+            </div>
+
+            <div class="form-group col-md-3">
+
+                <input th:field="*{minAmount}" placeholder="Minimalna kwota transakcji" class="form-control"/>
+
+            </div>
+            <div class="form-group col-md-3">
+
+                <input th:field="*{maxAmount}" placeholder="Maksymalna kwota transakcji" class="form-control"/>
+            </div>
+        </div>
+        <div class="form-group col-md-3">
+
+            <input th:field="*{minDate}" placeholder="od daty" class="form-control"/>
+        </div>
+        <div class="form-group col-md-3">
+
+            <input th:field="*{maxDate}" placeholder="do daty" class="form-control"/>
+        </div>
+
+
+        <div class="row">
+
+                <div class="form-group col-md-8"></div>
+
+                <div class="form-group col-md-2">
+                    <a th:if="${searchCommand.isEmpty() eq false or #fields.hasErrors('*')}" th:href="@{transactionList.html(all)}" class="btn btn-success">
+                        <span class="glyphicon glyphicon-refresh"></span> Pokaż wszystko
+                    </a>
+                </div>
+
+                <div class="form-group col-md-2">
+                    <button type="submit" class="btn btn-info">
+                        <span class="glyphicon glyphicon-search"></span> Wyszukaj
+                    </button>
+                </div>
+            </div>
+        </form>
+
+
+        <div th:if="${transactionListPage.hasContent() eq false}">
+            <span th:if="${searchCommand.isEmpty()}">Brak Transakcji w bazie</span>
+            <span th:unless="${searchCommand.isEmpty()}">Brak wyników wyszukiwania</span>
+        </div>
+        <div th:if="${transactionListPage.hasContent() eq true}">
+
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th>Numer konta</th>
+                    <th>Data</th>
+                    <th>Opis</th>
+                    <th>Rodzaj</th>
+                    <th>Kwota</th>
+
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="tran : ${transactionListPage.content}">
+
+                    <td>[[${tran.account.accountNumber}]]</td>
+                    <td>[[${tran.date}]]</td>
+                    <td>[[${tran.text}]]</td>
+                    <td>[[${tran.kindOfOperation.kind}]]</td>
+                    <td>[[${tran.amount}]] zł</td>
+                </tr>
+                </tbody>
+            </table>
+
+    </div>
+
+
+
+        <div th:replace="shared/pagination :: pager(mainUrl= @{transactionList.html}, page = ${transactionListPage}, id=${searchCommand.id})"></div>
+</div>
+<div th:replace="shared/footer :: footer"></div>
+</body>
+</html>

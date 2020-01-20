@@ -2,7 +2,9 @@ package com.example.bankapplication.model.Credit;
 
 import com.example.bankapplication.model.Account;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -11,7 +13,8 @@ import java.util.Calendar;
 import java.util.Date;
 
 @Entity
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 public class Credit implements Serializable {
 
@@ -19,7 +22,7 @@ public class Credit implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_credit")
     private Long id;
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.REMOVE)
     @JoinColumn(name = "account_id")
     private Account account;
     @ManyToOne
@@ -32,6 +35,7 @@ public class Credit implements Serializable {
     @JoinColumn(name = "proposal_id")
     private Proposal proposal;
     @Column(name = "start_date")
+    @Temporal(TemporalType.DATE)
     private Date startDate;
     @Column(nullable = false, name = "loan_amount")
     private BigDecimal loanAmount;

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<html>
+<head>
+    <title>Konto</title>
+    <div th:replace="shared/header :: header-css"></div>
+</head>
+<body class="card">
+<div th:replace="shared/header :: header('home')"></div>
+<div id="main">
+
+    <table  class="table table-striped">
+        <thead>
+        <tr>
+            <th>Numer konta</th>
+            <th sec:authorize="isAuthenticated()">Opcje</th>
+
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="account : ${accountList}">
+
+            <td>
+
+                <a sec:authorize="isAuthenticated()" th:href="@{/account.html(id=${account.id})}">[[${account.accountNumber}]]</a>
+            </td>
+            <td sec:authorize="isAuthenticated()">
+                <a class="btn btn-success" th:href="@{/transactionList.html(id=${account.id})}" >Historia transakcji</a>
+                <a class="btn btn-danger" sec:authorize="isAuthenticated()" th:href="@{/account.html(did=${account.id})}">Usuń</a>
+            </td>
+
+        </tr>
+
+        </tbody>
+    </table>
+    <a href="account/add">Dodaj konto</a>
+
+</div>
+<div th:replace="shared/footer :: footer"></div>
+</body>
+
+</html>

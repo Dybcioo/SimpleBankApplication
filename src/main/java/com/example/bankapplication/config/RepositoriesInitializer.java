@@ -147,6 +147,7 @@ public class RepositoriesInitializer {
                 Credit credit = new Credit(new Date(), new BigDecimal(150_000), new BigDecimal(2100), new BigDecimal(200_000));
                 credit.setTarget(target);
                 credit.setStatus(status);
+                credit.setAccount(userAccount);
                 Proposal proposal = new Proposal(new BigDecimal(3700), "Wladek", "Joanna", "Kowalska");
                 Appendage appendage = new Appendage("/document/appendage1.doc");
 

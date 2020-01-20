@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<html>
+<head>
+    <title>Szczegóły konta</title>
+    <div th:replace="shared/header :: header-css"></div>
+</head>
+<body class="card">
+<div th:replace="shared/header :: header('home')"></div>
+<div id="main">
+
+    <h1>Konto</h1>
+    <table  class="table table-striped">
+        <thead>
+        <tr>
+            <th>Numer konta</th>
+            <th>Saldo</th>
+            <th>Data założenia</th>
+
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td th:text="${account.accountNumber}"></td>
+            <td th:text="${account.balance} + '  zł'"></td>
+            <td th:text="${account.creationDate}"></td>
+        </tr>
+
+        </tbody>
+    </table>
+    <h2>Kredyty:</h2>
+    <table  class="table table-striped">
+        <thead>
+        <tr>
+            <th>Data zmiany statusu</th>
+            <th>Kwota pożyczki</th>
+            <th>Rata</th>
+            <th>Całościowa kwota spłaty</th>
+            <th>Cel</th>
+            <th>Status</th>
+
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="credit : ${account.getCredits()}">
+            <td th:text="${credit.startDate}"></td>
+            <td th:text="${credit.loanAmount} + '  zł'"></td>
+            <td th:text="${credit.installment}+ '  zł'"></td>
+            <td th:text="${credit.repaymentAmount}+ '  zł'"></td>
+            <td th:text="${credit.target.name}"></td>
+            <td th:text="${credit.status.name}"></td>
+        </tr>
+
+        </tbody>
+    </table>
+
+
+</div>
+<div th:replace="shared/footer :: footer"></div>
+</body>
+
+</html>

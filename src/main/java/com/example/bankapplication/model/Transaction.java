@@ -21,10 +21,12 @@ public class Transaction implements Serializable {
     @ManyToOne
     @JoinColumn(name = "kind_operation_id")
     private KindOfOperation kindOfOperation;
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.REMOVE)
     @JoinColumn(name = "account_id")
     private Account account;
+    private String text;
     private BigDecimal amount;
+    @Temporal(TemporalType.DATE)
     private Date date;
 
     public Transaction(BigDecimal amount, Date date) {
