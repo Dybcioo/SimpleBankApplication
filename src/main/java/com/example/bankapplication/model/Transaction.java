@@ -29,6 +29,10 @@ public class Transaction implements Serializable {
     @Temporal(TemporalType.DATE)
     private Date date;
 
+    @Transient
+    private String fromAccountNumber;
+    private String OptionAccountNumber;
+
     public Transaction(BigDecimal amount, Date date) {
         this.amount = amount;
         this.date = date;

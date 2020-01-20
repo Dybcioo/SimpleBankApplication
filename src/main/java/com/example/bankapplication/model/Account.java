@@ -9,6 +9,7 @@ import lombok.Setter;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.math.MathContext;
 import java.util.*;
 
 @Entity
@@ -71,5 +72,12 @@ public class Account implements Serializable {
         user.getAccounts().remove(this);
         transactions.forEach(transaction -> transaction.setAccount(null));
         credits.forEach(credit -> credit.setAccount(null));
+    }
+
+    public void reduceBalanse(BigDecimal reduce){
+      this.balance = this.balance.subtract(reduce, new MathContext(2));
+    }
+    public void riseBalanse(BigDecimal rise){
+      this.balance = this.balance.add(rise, new MathContext(2));
     }
 }

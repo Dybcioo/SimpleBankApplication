@@ -6,4 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface KindOfOperationRepository extends JpaRepository<KindOfOperation, Long> {
+    KindOfOperation findFirstByKind(String kind);
 }
