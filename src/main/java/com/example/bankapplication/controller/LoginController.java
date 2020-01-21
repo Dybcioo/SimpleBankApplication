@@ -5,16 +5,14 @@ import com.example.bankapplication.model.User.User;
 import com.example.bankapplication.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
+import org.springframework.data.repository.query.Param;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.InitBinder;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.text.SimpleDateFormat;
@@ -59,9 +57,6 @@ public class LoginController {
 
     @RequestMapping(value="/success")
     public String home(Model model){
-       /* Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        User user = userService.findUserByUserName(auth.getName());
-        model.addAttribute("userName", "Welcome " + user.getLogin());*/
         return "home";
     }
 
@@ -106,5 +101,10 @@ public class LoginController {
         return "redirect:profile";
     }
 
+    @GetMapping(value = "/user.html", params = "did")
+    public String deleteUser(Long did){
+        userService.deleteUser(did);
+        return "redirect:/logout";
+    }
 
 }

@@ -1,5 +1,7 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <html>
 <head>
@@ -100,6 +102,11 @@
                 </fieldset>
             </form>
         </div>
+        <hr>
+        <br>
+    </div>
+    <div>
+        <a class="btn btn-danger" sec:authorize="isAuthenticated()" th:href="@{/user.html(did=${user.id})}">Usuń profil</a>
     </div>
 </div>
 <div th:replace="shared/footer :: footer"></div>

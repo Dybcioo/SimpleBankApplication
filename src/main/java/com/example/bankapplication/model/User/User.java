@@ -83,4 +83,11 @@ public class User implements Serializable {
         account.setUser(this);
         getAccounts().add(account);
     }
+
+    @PreRemove
+    public void removeAll(){
+      //  accounts.forEach(account -> account.setUser(null));
+        address.setUser(null);
+        roles.forEach(role -> role.getUsers().remove(this));
+    }
 }

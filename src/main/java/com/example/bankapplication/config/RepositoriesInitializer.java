@@ -125,6 +125,7 @@ public class RepositoriesInitializer {
             }
             if(transactionRepository.findAll().isEmpty()){
                 Transaction transaction = new Transaction(new BigDecimal(1000), new Date());
+                transaction.setOptionAccountNumber("78106000185855053759585506");
                 transaction.setKindOfOperation(koo);
                 transaction.setAccount(userAccount);
 

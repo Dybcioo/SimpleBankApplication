@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.io.File;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.HashSet;
@@ -35,6 +36,14 @@ public class Proposal implements Serializable {
     private String motherName;
     @Column(name = "mother_maiden_name")
     private String motherMaidenName;
+    private BigDecimal creditAmount;
+    private String reason;
+    @Transient
+    private File file1;
+    @Transient
+    private File file2;
+    @Transient
+    private File file3;
 
     public void addAppendage(Appendage appendage){
         appendage.setProposal(this);
