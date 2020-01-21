@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<html>
+<head>
+    <title>Szczegóły użytkownika</title>
+    <div th:replace="shared/header :: header-css"></div>
+</head>
+<body class="card">
+<div th:replace="shared/header :: header('home')"></div>
+<div id="main">
+
+    <h1>Konto</h1>
+    <table  class="table table-striped">
+        <thead>
+        <tr>
+            <th>Imię</th>
+            <th>Nazwisko</th>
+            <th>Data urodzenia</th>
+            <th>Email</th>
+            <th>Wojewodztwo</th>
+            <th>Miasto</th>
+            <th>Ulica</th>
+            <th>Nr domu</th>
+
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td th:text="${users.name}"></td>
+            <td th:text="${users.lastName}"></td>
+            <td th:text="${users.birthdayDate}"></td>
+            <td th:text="${users.email}"></td>
+            <td th:text="${users.address.province}"></td>
+            <td th:text="${users.address.city}"></td>
+            <td th:text="${users.address.street}"></td>
+            <td th:text="${users.address.numberHouse}"></td>
+        </tr>
+
+        </tbody>
+    </table>
+
+
+</div>
+<div th:replace="shared/footer :: footer"></div>
+</body>
+
+</html>

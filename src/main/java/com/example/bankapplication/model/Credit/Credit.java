@@ -25,9 +25,7 @@ public class Credit implements Serializable {
     @ManyToOne(cascade = CascadeType.REMOVE)
     @JoinColumn(name = "account_id")
     private Account account;
-    @ManyToOne
-    @JoinColumn(name = "status_id")
-    private Status status;
+
     @ManyToOne
     @JoinColumn(name = "target_id")
     private Target target;
@@ -37,11 +35,10 @@ public class Credit implements Serializable {
     @Column(name = "start_date")
     @Temporal(TemporalType.DATE)
     private Date startDate;
-    @Column(nullable = false, name = "loan_amount")
+    @Column( name = "loan_amount")
     private BigDecimal loanAmount;
-    @Column(nullable = false)
     private BigDecimal installment;
-    @Column(nullable = false, name = "repayment_amount")
+    @Column( name = "repayment_amount")
     private BigDecimal repaymentAmount;
 
     public Credit(Date startDate, BigDecimal loanAmount, BigDecimal installment, BigDecimal repaymentAmount) {
@@ -56,7 +53,6 @@ public class Credit implements Serializable {
         return "Credit{" +
                 "id=" + id +
                 ", account=" + account +
-                ", status=" + status.getName() +
                 ", targetName=" + target.getName() +
                 //", proposalId=" + proposal.getId() +
                 ", startDate=" + startDate +

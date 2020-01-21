@@ -10,8 +10,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.List;
 
 @Service
 public class UserService {
@@ -72,4 +74,20 @@ public class UserService {
         userRepository.deleteById(id);
     }
 
+    public List<User> getAllUsers(){
+        return userRepository.findAll();
+    }
+
+    public User getUser(Long id){
+        return userRepository.findFirstById(id);
+    }
+
+    @Transactional
+    public void dezactiveUser(Long id){
+        userRepository.updateActive(false, id);
+    }
+    @Transactional
+    public void activeUser(Long id){
+        userRepository.updateActive(true, id);
+    }
 }

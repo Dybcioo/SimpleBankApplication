@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<html>
+<head>
+    <title>Szczegóły wniosku</title>
+    <div th:replace="shared/header :: header-css"></div>
+</head>
+<body class="card">
+<div th:replace="shared/header :: header('home')"></div>
+<div id="main">
+
+    <h1>Konto</h1>
+    <table  class="table table-striped">
+        <thead>
+        <tr>
+            <th>Dochód</th>
+            <th>Imie ojca</th>
+            <th>Imie matki</th>
+            <th>Panieńskie imie matki</th>
+            <th>Załączniki</th>
+
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td th:text="${proposal.income}"></td>
+            <td th:text="${proposal.fatherName}"></td>
+            <td th:text="${proposal.motherName}"></td>
+            <td th:text="${proposal.motherMaidenName}"></td>
+            <td th:each="appendage : ${proposal.getAppendages()}">
+                <a  th:href="${appendage.path}">[[${appendage.id}]]</a>
+            </td>
+        </tr>
+
+        </tbody>
+    </table>
+
+
+</div>
+<div th:replace="shared/footer :: footer"></div>
+</body>
+
+</html>

@@ -49,7 +49,9 @@ public class TransactionService {
             someMethod(tran, kind, account1, tran.getOptionAccountNumber());
 
         }else if(kind.getKind().equalsIgnoreCase("wplata")){
-
+            Account account1 = accountRepository.findFirstByAccountNumber(tran.getFromAccountNumber());
+            account1.riseBalanse(tran.getAmount());
+            someMethod(tran, kind, account1, "Wpłata gotówki");
 
         }else if(kind.getKind().equalsIgnoreCase("wyplata")){
             Account account1 = accountRepository.findFirstByAccountNumber(tran.getFromAccountNumber());

@@ -36,8 +36,9 @@ public class Proposal implements Serializable {
     private String motherName;
     @Column(name = "mother_maiden_name")
     private String motherMaidenName;
-    private BigDecimal creditAmount;
-    private String reason;
+    @ManyToOne
+    @JoinColumn(name = "status_id")
+    private Status status;
     @Transient
     private File file1;
     @Transient

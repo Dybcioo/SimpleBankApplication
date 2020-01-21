@@ -19,7 +19,7 @@ public class Status implements Serializable {
     private Long id;
     @OneToMany(mappedBy = "status", fetch = FetchType.EAGER,
     cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<Credit> credits = new HashSet<>();
+    private Set<Proposal> proposals = new HashSet<>();
     @Column(name = "status_name")
     private String name;
 
@@ -27,9 +27,9 @@ public class Status implements Serializable {
         this.name = name;
     }
 
-    public void addCredit(Credit credit){
-        credit.setStatus(this);
-        getCredits().add(credit);
+    public void addCredit(Proposal proposal){
+        proposal.setStatus(this);
+        getProposals().add(proposal);
     }
     @Override
     public String toString() {

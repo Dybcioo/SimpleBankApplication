@@ -75,9 +75,9 @@ public class Account implements Serializable {
     }
 
     public void reduceBalanse(BigDecimal reduce){
-      this.balance = this.balance.subtract(reduce, new MathContext(2));
+      this.balance = this.balance.subtract(reduce);
     }
     public void riseBalanse(BigDecimal rise){
-      this.balance = this.balance.add(rise, new MathContext(2));
+      this.balance = this.balance.add(rise);
     }
 }

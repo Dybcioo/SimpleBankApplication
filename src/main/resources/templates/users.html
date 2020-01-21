@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<html>
+<head>
+    <title>Konto</title>
+    <div th:replace="shared/header :: header-css"></div>
+</head>
+<body class="card">
+<div th:replace="shared/header :: header('home')"></div>
+<div id="main">
+
+    <table  class="table table-striped">
+        <thead>
+        <tr>
+            <th>Użytkownicy</th>
+            <th>Imię</th>
+            <th>Nazwisko</th>
+            <th>Konta</th>
+            <th>Opcje</th>
+
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="user : ${users}">
+
+            <td>
+                <a sec:authorize="isAuthenticated()" th:href="@{/user(id=${user.id})}">[[${user.login}]]</a>
+            </td>
+            <td><p th:text="${user.name}"></p></td>
+            <td><p th:text="${user.lastName}"></p></td>
+            <td>
+                <p th:each="account : ${user.getAccounts()}">
+                    <a  th:href="@{/account.html(id=${account.id})}">[[${account.accountNumber}]]</a>
+                </p>
+            </td>
+            <td>
+                <a class="btn btn-success" th:href="@{/user/active(id=${user.id})}" >Aktywuj</a>
+                <a class="btn btn-danger" th:href="@{/user/dezactive(id=${user.id})}" >Dezaktywuj</a>
+                <a class="btn btn-danger" sec:authorize="isAuthenticated()" th:href="@{/user.html(didi=${user.id})}">Usuń</a>
+            </td>
+
+        </tr>
+
+        </tbody>
+    </table>
+
+</div>
+<div th:replace="shared/footer :: footer"></div>
+</body>
+
+</html>

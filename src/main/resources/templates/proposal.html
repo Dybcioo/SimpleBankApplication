@@ -15,9 +15,22 @@
                 <fieldset>
                     <h1>Wniosek:</h1>
 
+                    <div class="form-group" >
+                        <select class="form-control" th:field="*{credit.account.accountNumber}"  >
+                            <option value="0" >Wybierz konto</option>
+                            <option th:each="account : ${accounts}" th:value="${account.accountNumber}" th:text="${account.accountNumber}"></option>
+                        </select>
+                    </div>
+                    <div class="form-group" >
+                        <select class="form-control" th:field="*{credit.target.name}"  >
+                            <option value="0" >Wybierz cel</option>
+                            <option th:each="target : ${targets}" th:value="${target.name}" th:text="${target.name}"></option>
+                        </select>
+                    </div>
+
                     <div class="form-group">
                         <p>Kwota kredytu:</p>
-                        <input type="text" th:field="*{creditAmount}"
+                        <input type="text" th:field="*{credit.loanAmount}"
                                class="form-control"  required="true" autofocus="true"/>
                     </div>
 
@@ -43,11 +56,6 @@
                         <p>Nazwisko panieńskie matki:</p>
                         <input type="text" th:field="*{motherMaidenName}"
                                class="form-control"  required="true" autofocus="true"/>
-                    </div>
-                    <div class="form-group">
-                        <p>Cel kredytu:</p>
-                        <textarea type="text" th:field="*{reason}"
-                               class="form-control"  required="true" autofocus="true"></textarea>
                     </div>
 
                     <h2>Dodaj załączniki:</h2>

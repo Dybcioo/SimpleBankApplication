@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<html>
+<head>
+    <title>Sprawdz wnioski</title>
+    <div th:replace="shared/header :: header-css"></div>
+</head>
+<body class="card">
+<div th:replace="shared/header :: header('home')"></div>
+<div id="main">
+
+    <table  class="table table-striped">
+        <thead>
+        <tr>
+            <th>Imię</th>
+            <th>Nazwisko</th>
+            <th>Konto</th>
+            <th>Data złożenia</th>
+            <th>Kwota kredytu</th>
+            <th>Cel</th>
+            <th>Wniosek</th>
+            <th>Opcje</th>
+
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="proposal  : ${proposals}">
+
+            <td><a sec:authorize="isAuthenticated()" th:href="@{/user(id=${proposal.credit.account.user.id})}">[[${proposal.credit.account.user.name}]]</a></td>
+            <td><p th:text="${proposal.credit.account.user.lastName}"></p></td>
+            <td><p th:text="${proposal.credit.account.accountNumber}"></p></td>
+            <td><p th:text="${proposal.credit.startDate}"></p></td>
+            <td><p th:text="${proposal.credit.loanAmount}"></p></td>
+            <td><p th:text="${proposal.credit.target.name}"></p></td>
+            <td><a th:href="@{/proposal.html(id=${proposal.id})}">Zobacz wniosek</a></td>
+            <td sec:authorize="isAuthenticated()">
+                <a class="btn btn-success" th:href="@{/proposal/accept(id=${proposal.id})}" >Akceptuj</a>
+                <a class="btn btn-danger"  th:href="@{/proposal/discard(id=${proposal.id})}">Odrzuć</a>
+            </td>
+
+        </tr>
+
+        </tbody>
+    </table>
+
+</div>
+<div th:replace="shared/footer :: footer"></div>
+</body>
+
+</html>

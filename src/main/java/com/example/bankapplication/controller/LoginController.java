@@ -43,13 +43,13 @@ public class LoginController {
         if (userExists != null) {
             bindingResult
                     .rejectValue("userName", "error.user",
-                            "There is already a user registered with the user name provided");
+                            "Uzytkownik o takim loginie istnieje");
         }
         if (bindingResult.hasErrors()) {
 
         } else {
             userService.saveUser(user);
-            model.addAttribute("successMessage", "User has been registered successfully");
+            model.addAttribute("successMessage", "Użytkownik zarejestrowany pomyślnie!");
             model.addAttribute("user", new User());
         }
         return "registration";
@@ -61,7 +61,7 @@ public class LoginController {
     }
 
     @InitBinder
-    public void initBinder(WebDataBinder binder) {//Rejestrujemy edytory właściwości
+    public void initBinder(WebDataBinder binder) {
 
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         dateFormat.setLenient(false);
@@ -106,5 +106,33 @@ public class LoginController {
         userService.deleteUser(did);
         return "redirect:/logout";
     }
+    @GetMapping(value = "/user.html", params = "didi")
+    public String deleteAdminUser(Long didi){
+        userService.deleteUser(didi);
+        return "redirect:/users";
+    }
+
+    @GetMapping(value = "/users")
+    public String getAllUsers(Model model){
+        model.addAttribute("users", userService.getAllUsers());
+        return "users";
+    }
+    @GetMapping(value = "/user", params = "id")
+    public String getUser(Model model, Long id){
+        model.addAttribute("users", userService.getUser(id));
+        return "userDetails";
+    }
+    @GetMapping(value = "/user/dezactive", params = "id")
+    public String dezactiveUser(Model model, Long id){
+        userService.dezactiveUser(id);
+        return "redirect:/users";
+    }
+    @GetMapping(value = "/user/active", params = "id")
+    public String activeUser(Model model, Long id){
+        userService.activeUser(id);
+        return "redirect:/users";
+    }
+
+
 
 }
