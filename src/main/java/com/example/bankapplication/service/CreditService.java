@@ -44,18 +44,18 @@ public class CreditService {
         proposal.setStatus(statusRepository.findByName("Wniosek przyjety do rozpatrzenia"));
         proposal.setCredit(null);
         Proposal saveProposal = proposalRepository.save(proposal);
-        if(!(proposal.getFile1().getPath() == null || proposal.getFile1().getPath().equalsIgnoreCase("")) ) {
-            Appendage appendage1 = new Appendage("C:\\Users\\domin\\IdeaProjects\\bank-application\\zal\\"+proposal.getFile1().getPath());
+        if(!(proposal.getFile1().getOriginalFilename() == null || proposal.getFile1().getOriginalFilename().equalsIgnoreCase("")) ) {
+            Appendage appendage1 = new Appendage("C:\\Users\\domin\\IdeaProjects\\bank-application\\zal\\"+proposal.getFile1().getOriginalFilename());
             appendage1.setProposal(saveProposal);
             appendageRepository.save(appendage1);
         }
-        if(!(proposal.getFile2().getPath() == null || proposal.getFile2().getPath().equalsIgnoreCase("")) ) {
-            Appendage appendage2 = new Appendage("C:\\Users\\domin\\IdeaProjects\\bank-application\\zal\\"+proposal.getFile2().getPath());
+        if(!(proposal.getFile2().getOriginalFilename() == null || proposal.getFile2().getOriginalFilename().equalsIgnoreCase("")) ) {
+            Appendage appendage2 = new Appendage("C:\\Users\\domin\\IdeaProjects\\bank-application\\zal\\"+proposal.getFile2().getOriginalFilename());
             appendage2.setProposal(saveProposal);
             appendageRepository.save(appendage2);
         }
-        if(!(proposal.getFile3().getPath() == null || proposal.getFile3().getPath().equalsIgnoreCase("")) ) {
-            Appendage appendage3 = new Appendage("C:\\Users\\domin\\IdeaProjects\\bank-application\\zal\\"+proposal.getFile3().getPath());
+        if(!(proposal.getFile3().getOriginalFilename() == null || proposal.getFile3().getOriginalFilename().equalsIgnoreCase("")) ) {
+            Appendage appendage3 = new Appendage("C:\\Users\\domin\\IdeaProjects\\bank-application\\zal\\"+proposal.getFile3().getOriginalFilename());
             appendage3.setProposal(saveProposal);
             appendageRepository.save(appendage3);
         }

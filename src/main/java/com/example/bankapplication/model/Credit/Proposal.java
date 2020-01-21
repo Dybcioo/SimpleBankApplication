@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.*;
 import java.io.File;
@@ -40,11 +41,11 @@ public class Proposal implements Serializable {
     @JoinColumn(name = "status_id")
     private Status status;
     @Transient
-    private File file1;
+    private MultipartFile file1;
     @Transient
-    private File file2;
+    private MultipartFile file2;
     @Transient
-    private File file3;
+    private MultipartFile file3;
 
     public void addAppendage(Appendage appendage){
         appendage.setProposal(this);
